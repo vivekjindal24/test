@@ -1,6 +1,6 @@
 from functools import lru_cache
-from pydantic import AnyHttpUrl, Field
-from pydantic_settings import BaseSettings
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
 
 class Settings(BaseSettings):
@@ -23,13 +23,14 @@ class Settings(BaseSettings):
     twilio_auth_token: str | None = None
     twilio_from_number: str | None = None
     calendar_organizer_email: str | None = None
-    allowed_origins: List[AnyHttpUrl] = []
+    allowed_origins: str = ""
     otel_exporter_otlp_endpoint: str | None = None
     otel_service_name: str | None = None
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False
+    )
 
 @lru_cache
 def get_settings() -> Settings:

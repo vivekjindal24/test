@@ -141,7 +141,7 @@ def upgrade() -> None:
         sa.Column("user_id", sa.Integer(), sa.ForeignKey("users.id")),
         sa.Column("action", sa.String(), nullable=False),
         sa.Column("resource", sa.String(), nullable=False),
-        sa.Column("metadata", sa.JSON()),
+        sa.Column("meta_data", sa.JSON()),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.func.now()),
     )
 
